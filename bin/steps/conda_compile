@@ -1,8 +1,9 @@
+CONDA_INSTALLER="Miniconda2-4.2.12-Linux-x86_64.sh"
 if [ ! -d /app/.heroku/miniconda ]; then
-    puts-step "Preparing Python/Miniconda Environment"
-    curl -Os https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh
-    bash Miniconda-latest-Linux-x86_64.sh  -p /app/.heroku/miniconda/ -b | indent
-    rm -fr Miniconda-latest-Linux-x86_64.sh
+    puts-step "Preparing Python/Miniconda 4.2.12 Environment"
+    curl -Os https://repo.continuum.io/miniconda/$CONDA_INSTALLER
+    bash $CONDA_INSTALLER -p /app/.heroku/miniconda/ -b | indent
+    rm -fr $CONDA_INSTALLER 
 
     conda install pip --yes | indent
 fi
@@ -14,8 +15,11 @@ conda install nomkl
 
 if [ -f conda-requirements.txt ]; then
     puts-step "Installing dependencies using Conda"
-    conda install --no-deps --file conda-requirements.txt --yes | indent
+    conda install --file conda-requirements.txt --yes | indent
 fi
 
 # Clean up the installation environment .
 conda clean -pt --yes > /dev/null
+rm -rf $HOME/.cache
+rm -rf $HOME/.heroku/miniconda/include
+rm -rf $HOME/.heroku/miniconda/pkgs
