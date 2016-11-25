@@ -91,7 +91,7 @@ set-default-env PYTHONPATH '/app/.heroku/miniconda/lib/python2.7/site-packages:$
 set-env PYTHONUNBUFFERED true
 set-default-env LANG en_US.UTF-8
 set-default-env PYTHONHASHSEED random
-
+set-default-env PYTHONPATH /app/
 
 # Experimental post_compile hook.
 source $BIN_DIR/steps/hooks/post_compile
